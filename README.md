@@ -17,8 +17,8 @@ Make sure you have the following software installed on your machine:
 
 1. Clone the repository using SSH:
 
-   ```bash
-   git clone git@github.com:adithyawebt/workx-calendar.git
+```
+git clone git@github.com:adithyawebt/workx-calendar.git
 2. Navigate to the project folder:
 ```
 cd workx-calendar

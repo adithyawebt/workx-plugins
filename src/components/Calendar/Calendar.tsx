@@ -1,11 +1,18 @@
-// Calendar.tsx
 import React, { useState } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedDay, addEvent } from '../../actions/actions';
+
 import styles from './Calendar.module.scss';
 import Schedule from '../Schedule/Schedule';
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const Calendar = () => {
+    const dispatch = useDispatch();
+    const selectedDay = useSelector((state) => state.selectedDay);
+    const events = useSelector((state) => state.events);
+
     const getDaysArray = (year: number, month: number) => {
         const daysArray = [];
         const firstDayOfMonth = new Date(year, month, 1);
@@ -23,10 +30,8 @@ const Calendar = () => {
         return daysArray;
     };
 
-    const [selectedDay, setSelectedDay] = useState<number>(new Date().getDate());
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
-    const [events, setEvents] = useState<Record<number, string[]>>({}); // Events state - not used yet
 
     const months = [
         'January', 'February', 'March', 'April',
@@ -47,7 +52,11 @@ const Calendar = () => {
     };
 
     const handleDayClick = (day: number) => {
-        setSelectedDay(day);
+        dispatch(setSelectedDay(day));
+    };
+
+    const handleAddEvent = (event: string) => {
+        dispatch(addEvent({ day: selectedDay, event }));
     };
 
     return (
@@ -80,7 +89,7 @@ const Calendar = () => {
                     </div>
                 ))}
             </div>
-            <Schedule events={events} selectedDay={selectedDay} />
+            <Schedule events={events} selectedDay={selectedDay} onAddEvent={handleAddEvent} />
         </div>
     );
 };

@@ -3,9 +3,10 @@ import styles from './Schedule.module.scss';
 interface ScheduleProps {
     events: Record<number, string[]>;
     selectedDay: number;
+    onAddEvent: (event: string) => void;
 }
 
-const Schedule = ({ events, selectedDay }: ScheduleProps) => {
+const Schedule = ({ events, selectedDay, onAddEvent }: ScheduleProps) => {
     const dayEvents = events[selectedDay] || [];
 
     return (
@@ -20,6 +21,7 @@ const Schedule = ({ events, selectedDay }: ScheduleProps) => {
                     ))}
                 </ul>
             )}
+            <button onClick={() => onAddEvent('New Event')}>Add Event</button>
         </div>
     );
 };
